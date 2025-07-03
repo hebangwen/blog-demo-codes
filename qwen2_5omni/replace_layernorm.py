@@ -107,14 +107,14 @@ if __name__ == "__main__":
     print(f"{audio_embeds_noquant.shape = }")
     print(audio_embeds)
     print(f"{audio_embeds.shape = }")
-    print(torch.allclose(audio_embeds_noquant, audio_embeds, atol=1e-5))
+    print(f"{torch.allclose(audio_embeds_noquant, audio_embeds, atol=1e-5) = }")
 
     diff = torch.abs(audio_embeds_noquant - audio_embeds)
     print(diff)
     print(f"{diff.max() = }, {diff.mean() = }, {diff.std() = }")
 
     cosine_sim = torch.cosine_similarity(audio_embeds_noquant, audio_embeds)
-    print(cosine_sim)
+    print(f"{cosine_sim[:10] = }")
 
     l2_dist = torch.norm(audio_embeds_noquant - audio_embeds, p=2)
     l2_sim = 1 / (1 + l2_dist)
