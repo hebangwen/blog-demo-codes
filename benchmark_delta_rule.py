@@ -159,7 +159,7 @@ def optimized_chunk_gated_delta_rule(
     
     attn_mask = (g_diff + causal_mask_decay).exp()
     attn_mask_qk = attn_mask + identity
-    attn = (k_beta @ key.transpose(-1, -2)) * attn_mask
+    attn = -(k_beta @ key.transpose(-1, -2)) * attn_mask
     
     # === 优化 2: O(log n) 并行 Neumann 迭代 ===
     attn = parallel_neumann(attn, max_iter=chunk_size.bit_length())
