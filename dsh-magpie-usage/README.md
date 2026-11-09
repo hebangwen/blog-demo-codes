@@ -25,6 +25,13 @@ plugin_manager  action=install_bundle  target=/absolute/path/to/dsh-magpie-usage
 
 它会把这个目录 link 进当前 profile、登记 bundle，并立刻生效。装完刷新一次页面（客户端 bundle 不像 Host 侧那样热更）。
 
+仓库里这份代码在 [blog-demo-codes/dsh-magpie-usage](https://github.com/hebangwen/blog-demo-codes/tree/main/dsh-magpie-usage)，直接 clone 下来指向那个目录即可：
+
+```bash
+git clone https://github.com/hebangwen/blog-demo-codes.git
+# target = <clone>/dsh-magpie-usage
+```
+
 要求：本机跑着 Magpie（默认网关 `http://127.0.0.1:3425`），DSH 版本支持 `webServer.register` 与 `slots`。
 
 ## 数据链路
