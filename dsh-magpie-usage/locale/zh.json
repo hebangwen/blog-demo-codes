@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Magpie 用量",
+    "description": "在 Harness 里实时查看 Magpie 网关的调用量、成本、token、额度窗口与最近请求。"
+  }
+}

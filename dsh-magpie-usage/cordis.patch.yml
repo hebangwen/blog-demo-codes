@@ -1,0 +1,27 @@
+# @local/magpie-usage — bundle patch.
+#
+# One Loader row. The profile's own patch layer may override it by id
+# (`magpie-usage`) to change the gateway address, the default period or the
+# polling interval; an override replaces `config` wholesale, so restate every
+# key you want to keep.
+- insert:
+    - id: magpie-usage
+      name: '@local/magpie-usage'
+      config:
+        # Where the Magpie gateway listens. Magpie writes this address into the
+        # agents it connects; the default is its own local port.
+        gateway: 'http://127.0.0.1:3425'
+        # Bearer key sent to the gateway. Empty = no Authorization header, which
+        # is what a loopback gateway accepts from this machine.
+        apiKey: ''
+        # today | 7d | 30d — the period the panel opens on. `today` is the one
+        # hourly bucket set, so it is what "real time" means here.
+        period: 'today'
+        # Seconds between two reads of the gateway while a panel is open.
+        refreshSeconds: 10
+        # 账本以 USD 计价。这里给折算汇率，面板与 Agent 工具里的成本一律乘这个数
+        # 显示成人民币；写 0 则保留 USD 原值。额度卡里的余额是各 provider 自报的
+        # 字符串（¥ / $ / 积分），不参与折算。
+        cnyRate: 6.8
+        # Whether the agent tool `magpie_usage` is registered.
+        tool: true
