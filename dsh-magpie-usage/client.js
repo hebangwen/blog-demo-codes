@@ -339,7 +339,12 @@ window.__ModuleLoader__.load({
   background: color-mix(in oklab, var(--dsw-alias-state-error-primary) 12%, transparent);
 }
 .mu-banner code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-.mu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: var(--mu-gap); margin-top: calc(var(--mu-pad-y) * 0.7); }
+.mu-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: var(--mu-gap); margin-top: calc(var(--mu-pad-y) * 0.7);
+  /* Content-sized, not row-sized: two cards in one row do not have to end at the same baseline. */
+  align-items: start;
+}
 .mu-card {
   background: var(--dsw-alias-bg-layer-1); border: 1px solid var(--dsw-alias-border-l1);
   border-radius: 10px; padding: 13px 15px; min-width: 0;
@@ -363,7 +368,11 @@ window.__ModuleLoader__.load({
 .mu-bar[data-zero="true"] { background: var(--dsw-alias-border-l1); opacity: .5; }
 .mu-bar:hover { opacity: 1; }
 .mu-axis { display: flex; justify-content: space-between; margin-top: 6px; font-size: 11px; color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }
-.mu-quota-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); gap: 10px; }
+.mu-quota-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(252px, 1fr)); gap: 10px;
+  /* A provider with three windows is taller than one with none; let it be. */
+  align-items: start;
+}
 .mu-quota-name { font-size: 13px; font-weight: 600; }
 .mu-quota-plan { margin-top: 3px; font-size: 11.5px; color: var(--dsw-alias-label-secondary); }
 .mu-quota-balance { margin-top: 8px; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
@@ -392,6 +401,10 @@ window.__ModuleLoader__.load({
 .mu-table td[data-num="true"], .mu-table th[data-num="true"] { text-align: right; }
 .mu-table td[data-mono="true"] { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .mu-table td[data-cut="true"] { max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+/* Wrapping cells make the row as tall as its own content instead of one uniform strip. */
+.mu-table td[data-wrap="true"] {
+  white-space: normal; word-break: break-word; max-width: 220px; line-height: 1.35;
+}
 .mu-table tbody tr:hover td { background: var(--dsw-alias-bg-layer-2); }
 .mu-status { font-weight: 600; }
 .mu-status[data-bad="true"] { color: var(--dsw-alias-state-error-primary); }
@@ -609,7 +622,7 @@ window.__ModuleLoader__.load({
               return h(
                 'tr',
                 { key: row.id || `${row.provider}-${model}` },
-                h('td', { 'data-cut': 'true', title: row.id || model }, label),
+                h('td', { 'data-wrap': 'true', title: row.id || model }, label),
                 h('td', { className: 'mu-col-optional' }, row.sub || row.provider || '—'),
                 h('td', { 'data-num': 'true' }, compact(row.calls)),
                 h('td', { 'data-num': 'true' }, `${compact(row.input)} / ${compact(row.output)}`),
@@ -656,7 +669,7 @@ window.__ModuleLoader__.load({
                 { key: `${row.t}-${index}` },
                 h('td', { 'data-mono': 'true' }, clock(row.t) || '—'),
                 h('td', { className: 'mu-col-optional' }, shortAgent(row.agentName)),
-                h('td', { 'data-cut': 'true', title: row.req || row.model }, row.model || '—'),
+                h('td', { 'data-wrap': 'true', title: row.req || row.model }, row.model || '—'),
                 h('td', { 'data-num': 'true' }, `${compact(row.in)} / ${compact(row.out)}`),
                 h('td', { 'data-num': 'true' }, duration(row.ms)),
                 h('td', { 'data-num': 'true' }, row.priced === false ? '—' : money(row.cost, symbol)),
